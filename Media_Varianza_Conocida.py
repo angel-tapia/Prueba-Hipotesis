@@ -28,8 +28,8 @@ def menu_varianza_conocida():
         print("Introduce los datos:")
         n = int(input("n: "))
         xbarra = float(input(Sxbar + ": "))
-        sigma = float(input(Ssigma + ": "))
         xmu = float(input(Smu + ": "))
+        sigma = float(input(Ssigma + ": "))
         alpha = float(input(Salpha + ": "))
         alpha = 0.5 - alpha
         z = (xbarra - xmu) / (sigma / math.sqrt(n))
@@ -45,8 +45,8 @@ def menu_varianza_conocida():
         print("Introduce los datos:")
         n = int(input("n: "))
         xbarra = float(input(Sxbar + ": "))
-        sigma = float(input(Ssigma + ": "))
         xmu = float(input(Smu + ": "))
+        sigma = float(input(Ssigma + ": "))
         alpha = float(input(Salpha + ": "))
         alpha = 0.5 - alpha
         z = (xbarra - xmu) / (sigma / math.sqrt(n))
@@ -62,8 +62,8 @@ def menu_varianza_conocida():
         print("Introduce los datos:")
         n = int(input("n: "))
         xbarra = float(input(Sxbar + ": "))
-        sigma = float(input(Ssigma + ": "))
         xmu = float(input(Smu + ": "))
+        sigma = float(input(Ssigma + ": "))
         alpha = float(input(Salpha + ": "))
         alpha = 0.5 - alpha
         z = (xbarra - xmu) / (sigma / math.sqrt(n))
