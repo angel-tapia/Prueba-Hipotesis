@@ -6,7 +6,14 @@ import os
 """
     <summary>
         Funcion menu que realiza la prueba de hipotesis de una varianza conocida.
+        Dentro de la funcion va a leer datos y va a llamar a la funcion prueba.
     </summary>
+    <param name="n">Numero de datos</param>
+    <param name="xbarra">Media muestral</param>
+    <param name="xmu">Media poblacional</param>
+    <param name="sigma">Desviacion tipica poblacional</param>
+    <param name="alpha">Nivel de significacion</param>
+    <param name="z">Valor del estadistico prueba</param>
 """
 def menu_varianza_conocida():
     print("Elige la prueba de hipotesis a utilizar:")
@@ -45,6 +52,14 @@ def menu_varianza_conocida():
     prueba(z, ["<", ">", "!="][opcion - 1], alpha)
     return
 
+"""
+    <summary>
+        Funcion que rechaza o no rechaza H0.
+    </summary>
+    <param name="z">Valor del estadistico prueba.</param>
+    <param name="operation">Operacion a realizar.</param>
+    <param name="alpha">Valor de alpha.</param>
+"""
 def prueba(z, operation, alpha):
     if operation == "<":
         if z < -buscarZ(alpha):
@@ -62,6 +77,5 @@ def prueba(z, operation, alpha):
         else:
             print("No rechazamos H0")
     return
-
     
 menu_varianza_conocida()
