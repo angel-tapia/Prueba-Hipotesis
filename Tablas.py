@@ -1,4 +1,3 @@
-import time
 import pandas as pd
 from IPython.display import display
 
@@ -38,4 +37,4 @@ def buscarZ(x):
 """
 def buscarJiCuadrada(alpha, n):
     return tablaJiCuadrada[alpha][n-1]
-
+    
