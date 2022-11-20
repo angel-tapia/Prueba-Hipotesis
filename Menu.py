@@ -8,7 +8,11 @@ from Diferencia_Proporcion import *
 from Cociente_Varianzas import *
 import os
 
-#Create a function menu
+"""
+    <summary>
+        Funcion que muestra el menu de las prueba de hipotesis.
+    </summary>
+"""
 def menu():
     print("""
     Prueba de Hipotesis
