@@ -5,7 +5,7 @@ import os
 
 """
     <summary>
-        Funcion menu que realiza la prueba de hipotesis de una varianza desconocida.
+        Funcion menu que realiza la prueba de hipotesis de una media con varianza desconocida.
     </summary>
 """
 def menu_varianza_desconocida():
@@ -29,34 +29,43 @@ def menu_varianza_desconocida():
         menu_varianza_desconocida()
         return
     
-    print("Prueb de hipotesis de una varianza conocida")
+    print("Prueb de hipotesis para la media, con varianza desconocida")
     print("H0 " + Smu + " = " + Smu + "0")
     print("H1 " + Smu + " " + ["<", ">", "!="][opcion - 1] + " " + Smu + "0")
     print("")
     print("Introduce los datos:")
     n = int(input("n: "))
-    xbarra = float(input(Sxbar + ": "))
+    for i in n:
+        sumatoria = sumatoria + float(input)
+    xbarra = sumatoria/n
     xmu = float(input(Smu + ": "))
-    sigma = float(input(Ssigma + ": "))
+    s = float(input("s : "))
     alpha = float(input(Salpha + ": "))
-    z = (xbarra - xmu) / (sigma / math.sqrt(n))
+    t = (xbarra - xmu) / (s / math.sqrt(n))
     print("z = " + str(z))
-    prueba(z, ["<", ">", "!="][opcion - 1], alpha,n-1)
+    prueba(z, ["<", ">", "!="][opcion - 1], alpha, n-1)
     return
-
-def prueba(z, operation, alpha, n):
+"""
+    <summary>
+        Funcion que rechaza o no rechaza H0.
+    </summary>
+    <param name="t">Valor del estadistico prueba.</param>
+    <param name="operation">Operacion a realizar.</param>
+    <param name="alpha">Valor de alpha.</param>
+"""
+def prueba(t, operation, alpha, n):
     if operation == "<":
-        if z < -buscarT(alpha,n):
+        if t < -buscarT(alpha, n):
             print("Rechazamos H0")
         else:
             print("No rechazamos H0")
     elif operation == ">":
-        if z > buscarT(alpha,n):
+        if t > buscarT(alpha, n):
             print("Rechazamos H0")
         else:
             print("No rechazamos H0")
     elif operation == "!=":
-        if z < -buscarT(alpha / 2,n) or z > buscarT(alpha / 2,n):
+        if t < -buscarT(alpha / 2, n) or t > buscarT(alpha / 2, n):
             print("Rechazamos H0")
         else:
             print("No rechazamos H0")
