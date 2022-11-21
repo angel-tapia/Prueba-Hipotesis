@@ -24,7 +24,7 @@ def menu_varianza():
     print("3.")
     print("H0 " + Ssigma + " = " + Ssigma + "_0")
     print("H1 " + Ssigma + " != " + Ssigma + "_0")
-    opcion = int(input("Opcion: "))
+    opcion = int(input("Opción: "))
     os.system("cls")
     if opcion not in [1, 2, 3]:
         print("Opción incorrecta, vuelve a intentarlo.")

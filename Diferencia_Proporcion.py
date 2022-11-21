@@ -25,11 +25,11 @@ def menu_diferencia_proporcion():
     print("3.")
     print("H0. " + Stheta + "1 - " + Stheta + "2" + " = 0")
     print("H1. " + Stheta + "1 - " + Stheta + "2" + " != 0")
-    opcion = input("opción: ")
+    opcion = input("Opción: ")
     os.system("cls")
 
     if opcion not in ["1", "2", "3"]:
-        print("opción incorrecta, vuelve a intentarlo.")
+        print("Opción incorrecta, vuelve a intentarlo.")
         print("Presiona una tecla para continuar...")
         os.system("pause")
         os.system("cls")
@@ -54,11 +54,11 @@ def menu_diferencia_proporcion():
 
 """
     <summary>
-        Funcion que rechaza o no rechaza H0.
+        Función que rechaza o no rechaza H0.
     </summary>
-    <param name="Z">Valor de la prueba.</param>
+    <param name="Z">Valor del estadístico de prueba.</param>
     <param name="alpha">Valor de alpha.</param>
-    <param name="opcion">opción de la prueba.</param>
+    <param name="opcion">Opción de la prueba.</param>
 """
 def prueba(Z, alpha, opcion):
     if opcion == "1":
@@ -76,7 +76,6 @@ def prueba(Z, alpha, opcion):
             print("Se rechaza H0.")
         else:
             print("No se rechaza H0.")
-    print("Presiona una tecla para continuar...")
     os.system("pause")
     os.system("cls")
     return
