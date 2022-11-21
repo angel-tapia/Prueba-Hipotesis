@@ -9,10 +9,10 @@ tablaJiCuadrada = pd.read_excel(r"Prueba-Hipotesis\TablaJiCuadrada.xlsx")
 
 """
     <summary>
-        Funcion que busca el valor de la tabla Z
+        Función que busca el valor de la tabla Z.
     </summary>
-    <param name="x">Valor a buscar</param>
-    <returns>Valor de la tabla Z respecto a fila y columna</returns>
+    <param name="x">Valor del área a buscar.</param>
+    <returns>Valor de la tabla Z respecto a fila y columna.</returns>
 """
 def buscarZ(x):
     closer = 1e9
@@ -29,16 +29,22 @@ def buscarZ(x):
 
 """
     <summary>
-        Funcion que calcula el valor de la tabla Z.
+        Función que calcula el valor de la tabla Ji Cuadrada.
     </summary>
     <param name="alpha">Valor de la significancia.</param>
     <param name="n">Grados de libertad.</param>
-    <return>Valor de la tabla JiCuadrada.</return>
+    <return>Valor de la tabla Ji Cuadrada.</return>
 """
-
-def buscarT(alpha, n):
-    return tablaT[alpha][n-1]
-
 def buscarJiCuadrada(alpha, n):
     return tablaJiCuadrada[alpha][n-1]
     
+"""
+    <summary>
+        Función que calcula el valor de la tabla T de Student.
+    </summary>
+    <param name="alpha">Valor de la significancia.</param>
+    <param name="n">Grados de libertad.</param>
+    <return>Valor de la tabla T.</return>
+"""
+def buscarT(alpha, n):
+    return tablaT[alpha][n-1]
