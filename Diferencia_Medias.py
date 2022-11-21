@@ -52,7 +52,10 @@ def menu_diferencia_medias():
     n1 = int(input("n1: "))
     n2 = int(input("n2: "))
     alpha = float(input(Salpha + ": "))
-    alpha = 0.5 - alpha
+    if opcion=="3":
+        alpha = 0.5 - alpha/2
+    else:
+        alpha = 0.5 - alpha
     z = (x_bar1 - x_bar2 - delta) / (math.sqrt((sigma1/n1) + (sigma2/n2)))
     prueba(z, alpha, opcion)
     os.system("cls")
@@ -77,7 +80,7 @@ def prueba(z, alpha, opcion):
         else:
             print("No se rechaza H0.")
     elif opcion == "3":
-        if z < -buscarZ(alpha/2) or z > buscarZ(alpha/2):
+        if z < -buscarZ(alpha) or z > buscarZ(alpha):
             print("Se rechaza H0.")
         else:
             print("No se rechaza H0.")

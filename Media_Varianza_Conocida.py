@@ -47,7 +47,10 @@ def menu_varianza_conocida():
     xmu = float(input(Smu + ": "))
     sigma = float(input(Ssigma + ": "))
     alpha = float(input(Salpha + ": "))
-    alpha = 0.5 - alpha
+    if opcion=="3":
+        alpha = 0.5 - alpha/2
+    else:
+        alpha = 0.5 - alpha
     z = (xbarra - xmu) / (sigma / math.sqrt(n))
     print("z = " + str(z))
     prueba(z, ["<", ">", "!="][opcion - 1], alpha)
@@ -73,7 +76,7 @@ def prueba(z, operation, alpha):
         else:
             print("No rechazamos H0.")
     elif operation == "!=":
-        if z < -buscarZ(alpha / 2) or z > buscarZ(alpha / 2):
+        if z < -buscarZ(alpha) or z > buscarZ(alpha):
             print("Rechazamos H0.")
         else:
             print("No rechazamos H0.")
