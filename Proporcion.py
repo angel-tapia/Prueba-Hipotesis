@@ -6,6 +6,7 @@ import os
 """
     <summary>
         Funcion menu que realiza la prueba de hipotesis de una proporcion.
+    </summary>
     <param name="x">Numero de exitos en la muestra.</param>
     <param name="n">Numero de ensayos en la muestra.</param>
     <param name="alpha">Nivel de significancia.</param>
