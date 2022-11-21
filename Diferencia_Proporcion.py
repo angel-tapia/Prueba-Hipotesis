@@ -75,7 +75,7 @@ def prueba(Z, alpha, opcion):
         else:
             print("No se rechaza H0.")
     elif opcion == "3":
-        if Z < -buscarZ(alpha/2) or Z > buscarZ(alpha/2):
+        if Z < -buscarZ(alpha) or Z > buscarZ(alpha):
             print("Se rechaza H0.")
         else:
             print("No se rechaza H0.")
