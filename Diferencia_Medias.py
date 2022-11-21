@@ -15,7 +15,7 @@ import os
     <param name="n2">Numero de ensayos en la población 2.</param>
     <param name="delta">Diferencia proporcional que existe entre las medias.</param>
     <param name="alpha">Nivel de significacia.</param>
-    <param name="Z">Valor del estadistico de prueba.</param>
+    <param name="z">Valor del estadistico de prueba.</param>
 """
 def menu_diferencia_medias():
     print("Elige la prueba de hipotesis a utilizar:")
