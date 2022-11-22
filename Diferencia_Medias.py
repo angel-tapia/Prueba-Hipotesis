@@ -56,7 +56,7 @@ def menu_diferencia_medias():
         alpha = 0.5 - alpha/2
     else:
         alpha = 0.5 - alpha
-    z = (x_bar1 - x_bar2 - delta) / (math.sqrt((sigma1/n1) + (sigma2/n2)))
+    z = (x_bar1 - x_bar2 - delta) / (math.sqrt((sigma1**2 / n1) + (sigma2**2 / n2)))
     prueba(z, alpha, opcion)
     os.system("cls")
 
