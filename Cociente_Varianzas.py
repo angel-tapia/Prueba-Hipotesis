@@ -73,7 +73,7 @@ def prueba(n1, n2, fisher, alpha, opcion):
         else:
             print("No se rechaza H0")
     else:
-        if fisher >= buscarF(n1 - 1, n2 - 1, alpha/2) or fisher >= 1/buscarF(n2 - 1, n1 - 1, alpha/2):
+        if fisher >= buscarF(n1 - 1, n2 - 1, alpha/2) or fisher <= 1/buscarF(n2 - 1, n1 - 1, alpha/2):
             print("Se rechaza H0")
         else:
             print("No se rechaza H0")
