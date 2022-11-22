@@ -88,5 +88,3 @@ def prueba(z, alpha, opcion):
     os.system("pause")
     os.system("cls")
     return
-
-menu_diferencia_medias()

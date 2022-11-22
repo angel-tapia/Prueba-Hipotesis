@@ -81,5 +81,3 @@ def prueba(z, operation, alpha):
         else:
             print("No rechazamos H0.")
     return
-    
-menu_varianza_conocida()

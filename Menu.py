@@ -15,7 +15,7 @@ import os
 """
 def menu():
     print("""
-    Prueba de Hipotesis
+    Pruebas de Hipotesis
     1. Prueba de Hipotesis para una media con varianza conocida.
     2. Prueba de Hipotesis para una media con varianza desconocida.
     3. Prueba de Hipotesis para una proporción.
@@ -26,7 +26,6 @@ def menu():
     """)
     opcion = int(input("Seleccione una opcion: "))
     os.system("cls")
-    #Create a switch for the options
     if opcion == 1:
         print("Prueba de Hipotesis para una media con varianza conocida")
         menu_varianza_conocida()
@@ -50,9 +49,9 @@ def menu():
         menu_cociente_varianzas()
     else:
         print("Opcion no valida")
+        os.system("pause")
         menu()
     os.system("pause")
     menu()
-
-
+print("Hola!!")
 menu()
