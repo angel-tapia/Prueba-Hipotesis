@@ -5,7 +5,8 @@ from IPython.display import display
 tablaZ = pd.read_excel(r"Prueba-Hipotesis\TablaZ.xlsx")
 tablaT = pd.read_excel(r"Prueba-Hipotesis\TablaT.xlsx")
 tablaJiCuadrada = pd.read_excel(r"Prueba-Hipotesis\TablaJiCuadrada.xlsx")
-#tablaFisher = pd.read_excel(r"Prueba-Hipotesis\TablaFisher.xlsx")
+tablaFisher01 = pd.read_excel(r"Prueba-Hipotesis\TablaF0.01.xlsx")
+tablaFisher05 = pd.read_excel(r"Prueba-Hipotesis\TablaF0.05.xlsx")
 
 """
     <summary>
@@ -47,4 +48,67 @@ def buscarJiCuadrada(alpha, n):
     <return>Valor de la tabla T.</return>
 """
 def buscarT(alpha, n):
-    return tablaT[alpha][n-1]
+    return tablaT[alpha][n]
+
+
+"""
+    <summary>
+        Funcion que calcula el valor de la tabla Fisher 0.01.
+    </summary>
+    <param name="v1">Grados de libertad.</param>
+    <param name="v2">Grados de libertad.</param>
+    <return>Valor de la tabla Fisher 0.01.</return>
+"""
+def buscarFisher01(v1, v2):
+    for i in tablaFisher01:
+        if i == 'Unnamed: 0':
+            continue
+        if int(i) >= v1:
+            x = i
+            break
+
+    for i in tablaFisher01['Unnamed: 0']:
+        if i == 'Unnamed: 0':
+            continue
+        if int(i) >= v2:
+            y = i
+            break
+    return tablaFisher01[x][y-1]
+"""
+    <summary>
+        Funcion que calcula el valor de la tabla Fisher 0.05.
+    </summary>
+    <param name="v1">Grados de libertad.</param>
+    <param name="v2">Grados de libertad.</param>
+    <return>Valor de la tabla Fisher 0.05.</return>
+"""
+def buscarFisher05(v1, v2):
+    for i in tablaFisher05:
+        if i == 'F(0.05,v1,v2)':
+            continue
+        if int(i) >= v1:
+            x = i
+            break
+
+    for i in tablaFisher05['F(0.05,v1,v2)']:
+        if i == 'F(0.05,v1,v2)':
+            continue
+        if int(i) >= v2:
+            y = i
+            break
+    return tablaFisher05[x][y-1]
+
+"""
+    <summary>
+        Funcion que calcula el valor de la tabla Fisher.
+    </summary>
+    <param name="v1">Grados de libertad.</param>
+    <param name="v2">Grados de libertad.</param>
+    <param name="alpha">Valor de la significancia.</param>
+    <return>Valor de la tabla Fisher.</return>
+"""
+def buscarF(v1, v2, alpha):
+    if alpha == 0.01:
+        return buscarFisher01(v1, v2)
+    else:
+        return buscarFisher05(v1, v2)

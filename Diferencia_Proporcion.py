@@ -46,7 +46,10 @@ def menu_diferencia_proporcion():
     n1 = int(input("n1: "))
     n2 = int(input("n2: "))
     alpha = float(input(Salpha + ": "))
-    alpha = 0.5 - alpha
+    if opcion=="3":
+        alpha = 0.5 - alpha/2
+    else:
+        alpha = 0.5 - alpha
     P = (x1 + x2) / (n1 + n2)
     Z = (x1 / n1 - x2 / n2) / math.sqrt(P * (1 - P) * (1 / n1 + 1 / n2))
     prueba(Z, alpha, opcion)
@@ -72,7 +75,7 @@ def prueba(Z, alpha, opcion):
         else:
             print("No se rechaza H0.")
     elif opcion == "3":
-        if Z < -buscarZ(alpha/2) or Z > buscarZ(alpha/2):
+        if Z < -buscarZ(alpha) or Z > buscarZ(alpha):
             print("Se rechaza H0.")
         else:
             print("No se rechaza H0.")

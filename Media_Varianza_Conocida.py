@@ -28,6 +28,7 @@ def menu_varianza_conocida():
     print("H1 " + Smu + " != " + Smu + "0")
     opcion = int(input("Opcion: "))
     os.system("cls")
+
     if opcion not in [1, 2, 3]:
         print("Opcion incorrecta, vuelve a intentarlo.")
         print("Presione cualquier tecla para continuar...")
@@ -36,7 +37,7 @@ def menu_varianza_conocida():
         menu_varianza_conocida()
         return
     
-    print("Prueb de hipotesis de una varianza conocida")
+    print("Prueba de hipotesis de una varianza conocida")
     print("H0 " + Smu + " = " + Smu + "0")
     print("H1 " + Smu + " " + ["<", ">", "!="][opcion - 1] + " " + Smu + "0")
     print("")
@@ -46,7 +47,10 @@ def menu_varianza_conocida():
     xmu = float(input(Smu + ": "))
     sigma = float(input(Ssigma + ": "))
     alpha = float(input(Salpha + ": "))
-    alpha = 0.5 - alpha
+    if opcion=="3":
+        alpha = 0.5 - alpha/2
+    else:
+        alpha = 0.5 - alpha
     z = (xbarra - xmu) / (sigma / math.sqrt(n))
     print("z = " + str(z))
     prueba(z, ["<", ">", "!="][opcion - 1], alpha)
@@ -63,19 +67,19 @@ def menu_varianza_conocida():
 def prueba(z, operation, alpha):
     if operation == "<":
         if z < -buscarZ(alpha):
-            print("Rechazamos H0")
+            print("Rechazamos H0.")
         else:
-            print("No rechazamos H0")
+            print("No rechazamos H0.")
     elif operation == ">":
         if z > buscarZ(alpha):
-            print("Rechazamos H0")
+            print("Rechazamos H0.")
         else:
-            print("No rechazamos H0")
+            print("No rechazamos H0.")
     elif operation == "!=":
-        if z < -buscarZ(alpha / 2) or z > buscarZ(alpha / 2):
-            print("Rechazamos H0")
+        if z < -buscarZ(alpha) or z > buscarZ(alpha):
+            print("Rechazamos H0.")
         else:
-            print("No rechazamos H0")
+            print("No rechazamos H0.")
     return
     
 menu_varianza_conocida()
