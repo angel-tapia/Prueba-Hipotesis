@@ -2,7 +2,7 @@ from Tablas import *
 from Constantes import *
 import math
 import os
-
+from tkinter import Tk, Label , Button , Entry, messagebox
 """
     <summary>
         Función menú que realiza la prueba de hipótesis concerniente a varianzas.
@@ -14,38 +14,47 @@ import os
     <param name="chi">Valor del estadístico de prueba.</param>
 """
 def menu_varianza():
-    print("Elige la prueba de hipótesis a utilizar:")
-    print("1.")
-    print("H0 " + Ssigma + " = " + Ssigma + "_0")
-    print("H1 " + Ssigma + " < " + Ssigma + "_0")
-    print("2.")
-    print("H0 " + Ssigma + " = " + Ssigma + "_0")
-    print("H1 " + Ssigma + " > " + Ssigma + "_0")
-    print("3.")
-    print("H0 " + Ssigma + " = " + Ssigma + "_0")
-    print("H1 " + Ssigma + " != " + Ssigma + "_0")
-    opcion = int(input("Opción: "))
-    os.system("cls")
-    if opcion not in [1, 2, 3]:
-        print("Opción incorrecta, vuelve a intentarlo.")
-        print("Presione cualquier tecla para continuar...")
-        os.system("pause")
-        os.system("cls")
-        menu_varianza()
-        return
+    ventanta = Tk()
+    ventanta.title("Prueba de Hipotesis para una Varianza")
+    ventanta.geometry("500x300")
+    lbltitulo = Label(ventanta, text="Introduce los datos y selecciona la region critica a evaluar")
+    lbltitulo.pack()
+    lbln = Label(ventanta, text="n =")
+    lbln.pack()
+    txtn = Entry(ventanta)
+    txtn.pack()
+    lbls = Label(ventanta,text= "S = ")
+    lbls.pack()
+    txts = Entry(ventanta)
+    txts.pack()
+    lblsigma = Label(ventanta,text=Ssigma+" = ")
+    lblsigma.pack()
+    txtsigma = Entry(ventanta)
+    txtsigma.pack()
+    lblalpha = Label(ventanta,text=Salpha+" = ")
+    lblalpha.pack()
+    txtalpha = Entry(ventanta)
+    txtalpha.pack()
+
+    def calcularChi():
+        n = txtn.get()
+        s = txts.get()
+        sigma = txtsigma.get()
+        return (int(n) - 1)(math.pow(float(s), 2)) / (math.pow(float(sigma), 2))
     
-    print("Prueba de hipótesis concerniente a varianzas:")
-    print("H0 " + Ssigma + " = " + Ssigma + "_0")
-    print("H1 " + Ssigma + " " + ["<", ">", "!="][opcion - 1] + " " + Ssigma + "_0")
-    print("")
-    print("Introduce los datos:")
-    n = int(input("n: "))
-    s = float(input("S: "))
-    sigma = float(input(Ssigma + ": "))
-    alpha = float(input(Salpha + ": "))
-    chi = (n - 1)(math.pow(s, 2)) / (math.pow(sigma, 2))
-    print(Schi+"2 = " + str(chi))
-    prueba(chi, ["<", ">", "!="][opcion - 1], alpha, n-1)
+    def obtenerAlpha():
+        alpha = txtalpha.get()
+        return float(alpha)
+    def obtenerN():
+        n = txtn.get()
+        return int(n)-1
+    btnRC_Menor_Que = Button(ventanta,text="<",command=lambda: prueba(calcularChi(),"<",  obtenerAlpha(),obtenerN()))
+    btnRC_Menor_Que.pack()
+    btnRC_Mayor_Que = Button(ventanta,text=">" ,command=lambda: prueba(calcularChi(),">",  obtenerAlpha(),obtenerN()))
+    btnRC_Mayor_Que.pack()
+    btnRC_Diferente = Button(ventanta,text="!=",command=lambda: prueba(calcularChi(),"!=",  obtenerAlpha(),obtenerN()))
+    btnRC_Diferente.pack()
+    ventanta.mainloop()
     return
 
 """
@@ -60,21 +69,21 @@ def menu_varianza():
 def prueba(chi, operation, alpha, n):
     if operation == "<":
         if chi < buscarJiCuadrada(1-alpha, n):
-            print("Rechazamos H0.")
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No rechazamos H0.")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
     elif operation == ">":
         if chi > buscarJiCuadrada(alpha, n):
-            print("Rechazamos H0.")
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No rechazamos H0.")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
     elif operation == "!=":
         if chi < buscarJiCuadrada((1-alpha) / 2, n) or chi > buscarZ(alpha / 2, n):
-            print("Rechazamos H0.")
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No rechazamos H0.")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
     os.system("pause")
     os.system("cls")
     return
     
-menu_varianza()
+

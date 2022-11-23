@@ -2,7 +2,7 @@ from Tablas import *
 from Constantes import *
 import math
 import os
-
+from tkinter import Tk, Label , Button , Entry, messagebox
 """
     <summary>
         Funcion menu que realiza la prueba de hipotesis de una diferencia de medias.
@@ -18,47 +18,69 @@ import os
     <param name="z">Valor del estadistico de prueba.</param>
 """
 def menu_diferencia_medias():
-    print("Elige la prueba de hipotesis a utilizar:")
-    print("1.")
-    print("H0. " + Smu + "1 - " + Smu + "2" + " = 0")
-    print("H1. " + Smu + "1 - " + Smu + "2" + " < 0")
-    print("2.")
-    print("H0. " + Smu + "1 - " + Smu + "2" + " = 0")
-    print("H1. " + Smu + "1 - " + Smu + "2" + " > 0")
-    print("3.")
-    print("H0. " + Smu + "1 - " + Smu + "2" + " = 0")
-    print("H1. " + Smu + "1 - " + Smu + "2" + " != 0")
-    opcion = input("Opcion: ")
-    os.system("cls")
+    ventanta = Tk()
+    ventanta.title("Prueba de Hipotesis para una Diferencia de Medias")
+    ventanta.geometry("500x600")
+    lbltitulo = Label(ventanta, text="Introduce los datos y selecciona la region critica a evaluar")
+    lbltitulo.pack()
+    lblxbarra1 = Label(ventanta, text=Sxbar+"_1 = ")
+    lblxbarra1.pack()
+    txtxbarra1 = Entry(ventanta)
+    txtxbarra1.pack()
+    lblxbarra2 = Label(ventanta,text=Sxbar + "_2 = ")
+    lblxbarra2.pack()
+    txtxbarra2 = Entry(ventanta)
+    txtxbarra2.pack()
+    lbldelta = Label(ventanta,text=Sdelta+" = ")
+    lbldelta.pack()
+    txtdelta = Entry(ventanta)
+    txtdelta.pack()
+    lblSigma1 = Label(ventanta,text=Ssigma+"_1 = ")
+    lblSigma1.pack()
+    txtSigma1 = Entry(ventanta)
+    txtSigma1.pack()
+    lblSigma2 = Label(ventanta,text=Ssigma+"_2 = ")
+    lblSigma2.pack()
+    txtSigma2 = Entry(ventanta)
+    txtSigma2.pack()
+    lbln1 = Label(ventanta, text="n1 =")
+    lbln1.pack()
+    txtn1 = Entry(ventanta)
+    txtn1.pack()
+    lbln2 = Label(ventanta,text= "n2 = ")
+    lbln2.pack()
+    txtn2 = Entry(ventanta)
+    txtn2.pack()
+    lblalpha = Label(ventanta,text=Salpha+" = ")
+    lblalpha.pack()
+    txtalpha = Entry(ventanta)
+    txtalpha.pack()
 
-    if opcion not in ["1", "2", "3"]:
-        print("Opcion incorrecta, vuelve a intentarlo.")
-        print("Presiona una tecla para continuar...")
-        os.system("pause")
-        os.system("cls")
-        menu_diferencia_medias()
-        return
+    def calcularZ():
+        x_bar1 = txtxbarra1.get()
+        x_bar2 = txtxbarra2.get()
+        delta = txtdelta.get()
+        sigma1 = txtSigma1.get()
+        sigma2 = txtSigma2.get()
+        n1 = txtn1.get()
+        n2 = txtn2.get()
+        return (float(x_bar1) - float(x_bar2) - float(delta)) / (math.sqrt((float(sigma1)**2 / int(n1)) + (float(sigma2)**2 / int(n2))))
+    def obtenerAlpha():
+        alpha = txtalpha.get()
+        return float(alpha)
     
-    print("Prueba de hipotesis de una diferencia de medias")
-    print("H0. " + Smu + "1 - " + Smu + "2" + " = 0")
-    print("H1. " + Smu + "1 - " + Smu + "2" + " " + ["<", ">", "!="][int(opcion) - 1] + " 0")
-    print("")
-    print("Introduce los datos:")
-    x_bar1 = float(input(Sxbar + "1: "))
-    x_bar2 = float(input(Sxbar + "2: "))
-    delta = float(input(Sdelta + ": "))
-    sigma1 = float(input(Ssigma + "1: "))
-    sigma2 = float(input(Ssigma + "2: "))
-    n1 = int(input("n1: "))
-    n2 = int(input("n2: "))
-    alpha = float(input(Salpha + ": "))
-    if opcion=="3":
-        alpha = 0.5 - alpha/2
-    else:
-        alpha = 0.5 - alpha
-    z = (x_bar1 - x_bar2 - delta) / (math.sqrt((sigma1**2 / n1) + (sigma2**2 / n2)))
-    prueba(z, alpha, opcion)
-    os.system("cls")
+    btnRC_Menor_Que = Button(ventanta,text="<",command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha(),"1"))
+    btnRC_Menor_Que.pack()
+    btnRC_Mayor_Que = Button(ventanta,text=">" ,command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha(),"2"))
+    btnRC_Mayor_Que.pack()
+    btnRC_Diferente = Button(ventanta,text="!=",command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha()/2,"3"))
+    btnRC_Diferente.pack()
+    ventanta.mainloop()
+    return
+
+    
+    
+    
 
 """
     <summary>
@@ -71,22 +93,20 @@ def menu_diferencia_medias():
 def prueba(z, alpha, opcion):
     if opcion == "1":
         if z < -buscarZ(alpha):
-            print("Se rechaza H0.")
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No se rechaza H0.")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
     elif opcion == "2":
         if z > buscarZ(alpha):
-            print("Se rechaza H0.")
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No se rechaza H0.")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
     elif opcion == "3":
         if z < -buscarZ(alpha) or z > buscarZ(alpha):
-            print("Se rechaza H0.")
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No se rechaza H0.")
-    print("Presiona una tecla para continuar...")
-    os.system("pause")
-    os.system("cls")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
+    
     return
 
-menu_diferencia_medias()
+

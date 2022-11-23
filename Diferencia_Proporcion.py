@@ -2,6 +2,7 @@ from Tablas import *
 from Constantes import *
 import math
 import os
+from tkinter import Tk, Label , Button , Entry, messagebox
 """
     <summary>
         Función menú que realiza la prueba de hipótesis de una diferencia de proporciones.
@@ -15,45 +16,51 @@ import os
     <param name="Z">Valor del estadístico de prueba.</param>
 """
 def menu_diferencia_proporcion():
-    print("Elige la prueba de hipótesis a utilizar:")
-    print("1.")
-    print("H0. " + Stheta + "1 - " + Stheta + "2" + " = 0")
-    print("H1. " + Stheta + "1 - " + Stheta + "2" + " < 0")
-    print("2.")
-    print("H0. " + Stheta + "1 - " + Stheta + "2" + " = 0")
-    print("H1. " + Stheta + "1 - " + Stheta + "2" + " > 0")
-    print("3.")
-    print("H0. " + Stheta + "1 - " + Stheta + "2" + " = 0")
-    print("H1. " + Stheta + "1 - " + Stheta + "2" + " != 0")
-    opcion = input("Opción: ")
-    os.system("cls")
-
-    if opcion not in ["1", "2", "3"]:
-        print("Opción incorrecta, vuelve a intentarlo.")
-        print("Presiona una tecla para continuar...")
-        os.system("pause")
-        os.system("cls")
-        menu_diferencia_proporcion()
-        return
-
-    print("Prueba de hipótesis de una diferencia de proporciones")
-    print("H0. " + Stheta + "1 - " + Stheta + "2" + " = 0")
-    print("H1. " + Stheta + "1 - " + Stheta + "2" + " " + ["<", ">", "!="][int(opcion) - 1] + " 0")
-    print("")
-    print("Introduce los datos:")
-    x1 = float(input("x1: "))
-    x2 = float(input("x2: "))
-    n1 = int(input("n1: "))
-    n2 = int(input("n2: "))
-    alpha = float(input(Salpha + ": "))
-    if opcion=="3":
-        alpha = 0.5 - alpha/2
-    else:
-        alpha = 0.5 - alpha
-    P = (x1 + x2) / (n1 + n2)
-    Z = (x1 / n1 - x2 / n2) / math.sqrt(P * (1 - P) * (1 / n1 + 1 / n2))
-    prueba(Z, alpha, opcion)
-    os.system("cls")
+    ventanta = Tk()
+    ventanta.title("Prueba de Hipotesis para una Diferencia de proporciones")
+    ventanta.geometry("500x600")
+    lbltitulo = Label(ventanta, text="Introduce los datos y selecciona la region critica a evaluar")
+    lbltitulo.pack()
+    lblx1 = Label(ventanta, text="x1 =")
+    lblx1.pack()
+    txtx1 = Entry(ventanta)
+    txtx1.pack()
+    lblx2 = Label(ventanta,text= "x2 = ")
+    lblx2.pack()
+    txtx2 = Entry(ventanta)
+    txtx2.pack()
+    lbln1 = Label(ventanta, text="n1 =")
+    lbln1.pack()
+    txtn1 = Entry(ventanta)
+    txtn1.pack()
+    lbln2 = Label(ventanta,text= "n2 = ")
+    lbln2.pack()
+    txtn2 = Entry(ventanta)
+    txtn2.pack()
+    lblalpha = Label(ventanta,text=Salpha+" = ")
+    lblalpha.pack()
+    txtalpha = Entry(ventanta)
+    txtalpha.pack()
+    def calcularZ():
+        x1 = txtx1.get()
+        x2 = txtx2.get()
+        n1 = txtn1.get()
+        n2 = txtn2.get()
+        P = (float(x1)+float(x2)/int(n1)+int(n2))
+        return (float(x1)/int(n1)-float(x2)/float(n2)) / math.sqrt(P * (1-P) * (1/int(n1)+1/int(n2)))
+    def obtenerAlpha():
+        alpha = txtalpha.get()
+        return float(alpha)
+        
+    btnRC_Menor_Que = Button(ventanta,text="<",command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha(),"1"))
+    btnRC_Menor_Que.pack()
+    btnRC_Mayor_Que = Button(ventanta,text=">" ,command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha(),"2"))
+    btnRC_Mayor_Que.pack()
+    btnRC_Diferente = Button(ventanta,text="!=",command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha()/2,"3"))
+    btnRC_Diferente.pack()
+    ventanta.mainloop()
+    return
+    
 
 """
     <summary>
@@ -63,24 +70,22 @@ def menu_diferencia_proporcion():
     <param name="alpha">Valor de alpha.</param>
     <param name="opcion">Opción de la prueba.</param>
 """
-def prueba(Z, alpha, opcion):
+def prueba(z, alpha, opcion):
     if opcion == "1":
-        if Z < -buscarZ(alpha):
-            print("Se rechaza H0.")
+        if z < -buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No se rechaza H0.")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
     elif opcion == "2":
-        if Z > buscarZ(alpha):
-            print("Se rechaza H0.")
+        if z > buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No se rechaza H0.")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
     elif opcion == "3":
-        if Z < -buscarZ(alpha) or Z > buscarZ(alpha):
-            print("Se rechaza H0.")
+        if z < -buscarZ(alpha) or z > buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
-            print("No se rechaza H0.")
-    os.system("pause")
-    os.system("cls")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
+    
     return
 
-menu_diferencia_proporcion()

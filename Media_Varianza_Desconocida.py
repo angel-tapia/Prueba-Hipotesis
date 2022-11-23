@@ -2,7 +2,7 @@ from Tablas import *
 from Constantes import *
 import math
 import os
-
+from tkinter import Tk, Label , Button , Entry, messagebox
 """
     <summary>
         Funcion menu que realiza la prueba de hipotesis de una media con varianza desconocida.
@@ -11,68 +11,84 @@ import os
     <param name = s>desviacion estandar de los datos ingresada por el usuario <param>
 """
 def menu_varianza_desconocida():
-    print("Elige la prueba de hipotesis a utilizar:")
-    print("1.")
-    print("H0 " + Smu + " = " + Smu + "0")
-    print("H1 " + Smu + " < " + Smu + "0")
-    print("2.")
-    print("H0 " + Smu + " = " + Smu + "0")
-    print("H1 " + Smu + " > " + Smu + "0")
-    print("3.")
-    print("H0 " + Smu + " = " + Smu + "0")
-    print("H1 " + Smu + " != " + Smu + "0")
-    opcion = int(input("Opcion: "))
-    os.system("cls")
-    if opcion not in [1, 2, 3]:
-        print("Opcion incorrecta, vuelve a intentarlo.")
-        print("Presione cualquier tecla para continuar...")
-        os.system("pause")
-        os.system("cls")
-        menu_varianza_desconocida()
-        return
+    #creación de todos los componentes de la GUI
+    ventanta = Tk()
+    ventanta.title("Prueba de Hipotesis para una media con varianza conocida")
+    ventanta.geometry("500x300")
+    lbltitulo = Label(ventanta, text="Introduce los datos y selecciona la region critica a evaluar")
+    lbltitulo.pack()
+    lbln = Label(ventanta, text="n =")
+    lbln.pack()
+    txtn = Entry(ventanta)
+    txtn.pack()
+    lblxbarra = Label(ventanta,text= Sxbar+" = ")
+    lblxbarra.pack()
+    txtxbarra = Entry(ventanta)
+    txtxbarra.pack()
+    lblmiu = Label(ventanta,text=Smu+" = ")
+    lblmiu.pack()
+    txtmiu = Entry(ventanta)
+    txtmiu.pack()
+    lbls = Label(ventanta,text="S = ")
+    lbls.pack()
+    txts = Entry(ventanta)
+    txts.pack()
+    lblalpha = Label(ventanta,text=Salpha+" = ")
+    lblalpha.pack()
+    txtalpha = Entry(ventanta)
+    txtalpha.pack()
+    #Función para calcular Z
+    def calcularZ():
+        n = txtn.get()
+        xbarra = txtxbarra.get()
+        xmu = txtmiu.get()
+        s = txts.get()
+        return (float(xbarra) - float(xmu)) / (float(s) / math.sqrt(int(n)))
+    #Función para obtener el valor de alpha cuando lo necesite, esto fue lo primero que se me ocurrió lo lamento Tapia
+    def obtenerAlpha():
+        alpha = txtalpha.get()
+        return float(alpha)
     
-    print("Prueb de hipotesis para la media, con varianza desconocida")
-    print("H0 " + Smu + " = " + Smu + "0")
-    print("H1 " + Smu + " " + ["<", ">", "!="][opcion - 1] + " " + Smu + "0")
-    print("")
-    print("Introduce los datos:")
-    n = int(input("n: "))
-    print("Ahora introduce los n datos")
-    for i in n:
-        sumatoria = sumatoria + float(input)
-    xbarra = sumatoria/n
-    xmu = float(input(Smu + ": "))
-    s = float(input("s : "))
-    alpha = float(input(Salpha + ": "))
-    t = (xbarra - xmu) / (s / math.sqrt(n))
-    print("z = " + str(z))
-    prueba(z, ["<", ">", "!="][opcion - 1], alpha, n-1)
+    btnRC_Menor_Que = Button(ventanta,text="<",command=lambda: prueba(calcularZ(),"<", 0.5 - obtenerAlpha()))
+    btnRC_Menor_Que.pack()
+    btnRC_Mayor_Que = Button(ventanta,text=">" ,command=lambda: prueba(calcularZ(),">", 0.5 - obtenerAlpha()))
+    btnRC_Mayor_Que.pack()
+    btnRC_Diferente = Button(ventanta,text="!=",command=lambda: prueba(calcularZ(),"!=", 0.5 - obtenerAlpha()/2))
+    btnRC_Diferente.pack()
+    ventanta.mainloop()
     return
+
 """
     <summary>
         Funcion que rechaza o no rechaza H0.
     </summary>
-    <param name="t">Valor del estadistico prueba.</param>
+    <param name="z">Valor del estadistico prueba.</param>
     <param name="operation">Operacion a realizar.</param>
     <param name="alpha">Valor de alpha.</param>
 """
-def prueba(t, operation, alpha, n):
+def prueba(z, operation, alpha):
     if operation == "<":
-        if t < -buscarT(alpha, n):
-            print("Rechazamos H0")
+        if z < -buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")
+            
         else:
-            print("No rechazamos H0")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
+            
     elif operation == ">":
-        if t > buscarT(alpha, n):
-            print("Rechazamos H0")
+        if z > buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")
+            
         else:
-            print("No rechazamos H0")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
+            print("No rechazamos H0.")
     elif operation == "!=":
-        if t < -buscarT(alpha / 2, n) or t > buscarT(alpha / 2, n):
-            print("Rechazamos H0")
+        if z < -buscarZ(alpha) or z > buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")
+            
         else:
-            print("No rechazamos H0")
+            messagebox.showinfo("Resultado","No rechazamos H0.")
+            
     return
     
-menu_varianza_desconocida()
+
     
