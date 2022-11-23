@@ -48,7 +48,7 @@ def menu_cociente_varianzas():
     s2 = float(input(Ssigma + "2: "))
     alpha = float(input(Salpha + ": "))
     fisher = s1**2 / s2**2
-    os.system("cls")
+    print("fisher = " + str(fisher))
     prueba(n1, n2, fisher, alpha, opcion)
 
 """

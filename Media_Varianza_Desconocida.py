@@ -7,8 +7,14 @@ import os
     <summary>
         Funcion menu que realiza la prueba de hipotesis de una media con varianza desconocida.
     </summary>
-    <param name= sumatoria> guarda la sumatoria de todos los datos ingresados <param>
-    <param name = s>desviacion estandar de los datos ingresada por el usuario <param>
+    <param name="sumatoria">Guarda la sumatoria de todos los datos ingresados.<param>
+    <param name="s">Desviacion estandar de los datos ingresada por el usuario.<param>
+    <param name="xbarra">Media de los datos ingresados.<param>
+    <param name="xmu">Media de la poblacion.<param>
+    <param name="n">Cantidad de datos ingresados.<param>
+    <param name="t">Valor de la prueba.<param>
+    <param name="alpha">Nivel de significancia.<param>
+    <param name="operation">Operacion a realizar.<param>
 """
 def menu_varianza_desconocida():
     print("Elige la prueba de hipotesis a utilizar:")
@@ -73,6 +79,4 @@ def prueba(t, operation, alpha, n):
         else:
             print("No rechazamos H0")
     return
-    
-menu_varianza_desconocida()
     

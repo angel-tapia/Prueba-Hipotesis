@@ -12,7 +12,7 @@ import os
     <param name="n1">Número de ensayos en la muestra 1.</param>
     <param name="n2">Número de ensayos en la muestra 2.</param>
     <param name="alpha">Nivel de significación.</param>
-    <param name="Z">Valor del estadístico de prueba.</param>
+    <param name="z">Valor del estadístico de prueba.</param>
 """
 def menu_diferencia_proporcion():
     print("Elige la prueba de hipótesis a utilizar:")
@@ -51,36 +51,35 @@ def menu_diferencia_proporcion():
     else:
         alpha = 0.5 - alpha
     P = (x1 + x2) / (n1 + n2)
-    Z = (x1 / n1 - x2 / n2) / math.sqrt(P * (1 - P) * (1 / n1 + 1 / n2))
-    prueba(Z, alpha, opcion)
+    z = (x1 / n1 - x2 / n2) / math.sqrt(P * (1 - P) * (1 / n1 + 1 / n2))
+    print("z = " + str(z))
+    prueba(z, alpha, opcion)
     os.system("cls")
 
 """
     <summary>
         Función que rechaza o no rechaza H0.
     </summary>
-    <param name="Z">Valor del estadístico de prueba.</param>
+    <param name="z">Valor del estadístico de prueba.</param>
     <param name="alpha">Valor de alpha.</param>
     <param name="opcion">Opción de la prueba.</param>
 """
-def prueba(Z, alpha, opcion):
+def prueba(z, alpha, opcion):
     if opcion == "1":
-        if Z < -buscarZ(alpha):
+        if z < -buscarZ(alpha):
             print("Se rechaza H0.")
         else:
             print("No se rechaza H0.")
     elif opcion == "2":
-        if Z > buscarZ(alpha):
+        if z > buscarZ(alpha):
             print("Se rechaza H0.")
         else:
             print("No se rechaza H0.")
     elif opcion == "3":
-        if Z < -buscarZ(alpha) or Z > buscarZ(alpha):
+        if z < -buscarZ(alpha) or z > buscarZ(alpha):
             print("Se rechaza H0.")
         else:
             print("No se rechaza H0.")
     os.system("pause")
     os.system("cls")
     return
-
-menu_diferencia_proporcion()

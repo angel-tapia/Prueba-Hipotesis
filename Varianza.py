@@ -44,7 +44,7 @@ def menu_varianza():
     sigma = float(input(Ssigma + ": "))
     alpha = float(input(Salpha + ": "))
     chi = (n - 1)(math.pow(s, 2)) / (math.pow(sigma, 2))
-    print(Schi+"2 = " + str(chi))
+    print(Schi+"^2 = " + str(chi))
     prueba(chi, ["<", ">", "!="][opcion - 1], alpha, n-1)
     return
 
@@ -76,5 +76,3 @@ def prueba(chi, operation, alpha, n):
     os.system("pause")
     os.system("cls")
     return
-    
-menu_varianza()
