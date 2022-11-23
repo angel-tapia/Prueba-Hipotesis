@@ -51,8 +51,8 @@ def menu_varianza_desconocida():
     s = float(input("s : "))
     alpha = float(input(Salpha + ": "))
     t = (xbarra - xmu) / (s / math.sqrt(n))
-    print("z = " + str(z))
-    prueba(z, ["<", ">", "!="][opcion - 1], alpha, n-1)
+    print("z = " + str(t))
+    prueba(t, ["<", ">", "!="][opcion - 1], alpha, n-1)
     return
 """
     <summary>
@@ -61,6 +61,7 @@ def menu_varianza_desconocida():
     <param name="t">Valor del estadistico prueba.</param>
     <param name="operation">Operacion a realizar.</param>
     <param name="alpha">Valor de alpha.</param>
+    <param name="n">Grados de libertad.</param>
 """
 def prueba(t, operation, alpha, n):
     if operation == "<":
