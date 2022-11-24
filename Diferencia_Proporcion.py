@@ -63,18 +63,18 @@ def menu_diferencia_proporcion():
         x2 = txtx2.get()
         n1 = txtn1.get()
         n2 = txtn2.get()
-        P = (float(x1)+float(x2)/int(n1)+int(n2))
-        return (float(x1)/int(n1)-float(x2)/float(n2)) / math.sqrt(P * (1-P) * (1/int(n1)+1/int(n2)))
+        P = ((float(x1)+float(x2))/(int(n1)+int(n2)))
+        return (float(x1)/int(n1)-float(x2)/float(n2)) / math.sqrt(P*(1-P)*(1/int(n1)+1/int(n2)))
     #Función para obtener el valor de alpha.
     def obtenerAlpha():
         alpha = txtalpha.get()
-        return 0.5-float(alpha)
+        return float(alpha)
     #Botones para las pruebas de hipótesis.
-    btnRC_Menor_Que = Button(ventana, text="<", command=lambda: prueba(calcularZ(), "<", obtenerAlpha()))
+    btnRC_Menor_Que = Button(ventana, text="<", command=lambda: prueba(calcularZ(), "<", 0.5-obtenerAlpha()))
     btnRC_Menor_Que.pack()
-    btnRC_Mayor_Que = Button(ventana, text=">" , command=lambda: prueba(calcularZ(), ">", obtenerAlpha()))
+    btnRC_Mayor_Que = Button(ventana, text=">" , command=lambda: prueba(calcularZ(), ">", 0.5-obtenerAlpha()))
     btnRC_Mayor_Que.pack()
-    btnRC_Diferente = Button(ventana, text="!=", command=lambda: prueba(calcularZ(), "!=", obtenerAlpha()/2))
+    btnRC_Diferente = Button(ventana, text="!=", command=lambda: prueba(calcularZ(), "!=", 0.5-obtenerAlpha()/2))
     btnRC_Diferente.pack()
     ventana.mainloop()
     return

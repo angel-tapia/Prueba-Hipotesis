@@ -69,13 +69,13 @@ def menu_varianza_conocida():
     #Función para obtener el valor de alpha.
     def obtenerAlpha():
         alpha = txtalpha.get()
-        return 0.5-float(alpha)
+        return float(alpha)
     #Botones para las pruebas de hipótesis.
-    btnRC_Menor_Que = Button(ventana, text="<", command=lambda: prueba(calcularZ(), "<", obtenerAlpha()))
+    btnRC_Menor_Que = Button(ventana, text="<", command=lambda: prueba(calcularZ(), "<", 0.5-obtenerAlpha()))
     btnRC_Menor_Que.pack()
-    btnRC_Mayor_Que = Button(ventana, text=">" , command=lambda: prueba(calcularZ(), ">", obtenerAlpha()))
+    btnRC_Mayor_Que = Button(ventana, text=">" , command=lambda: prueba(calcularZ(), ">", 0.5-obtenerAlpha()))
     btnRC_Mayor_Que.pack()
-    btnRC_Diferente = Button(ventana, text="!=", command=lambda: prueba(calcularZ(), "!=", obtenerAlpha()/2))
+    btnRC_Diferente = Button(ventana, text="!=", command=lambda: prueba(calcularZ(), "!=", 0.5-obtenerAlpha()/2))
     btnRC_Diferente.pack()
     ventana.mainloop()
     return

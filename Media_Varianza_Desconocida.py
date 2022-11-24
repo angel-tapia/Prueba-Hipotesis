@@ -44,7 +44,7 @@ def menu_varianza_desconocida():
     lblxbarra.pack()
     txtxbarra = Entry(ventana)
     txtxbarra.pack()
-    lblmiu = Label(ventana,text=Smu+" = ")
+    lblmiu = Label(ventana,text=Smu+"0 = ")
     lblmiu.pack()
     txtmiu = Entry(ventana)
     txtmiu.pack()
@@ -66,13 +66,17 @@ def menu_varianza_desconocida():
     #Función para obtener el valor de alpha.
     def obtenerAlpha():
         alpha = txtalpha.get()
-        return 0.5-float(alpha)
+        return float(alpha)
+    #Función para obtener el valor de los n número de datos.
+    def obtenerN():
+        n = txtn.get()
+        return int(n)-1
     #Botones para las pruebas de hipótesis.
-    btnRC_Menor_Que = Button(ventana,text="<",command=lambda: prueba(calcularT(), "<", obtenerAlpha()))
+    btnRC_Menor_Que = Button(ventana, text="<", command=lambda: prueba(calcularT(), "<", obtenerAlpha(), obtenerN()))
     btnRC_Menor_Que.pack()
-    btnRC_Mayor_Que = Button(ventana,text=">" ,command=lambda: prueba(calcularT(), ">", obtenerAlpha()))
+    btnRC_Mayor_Que = Button(ventana, text=">" , command=lambda: prueba(calcularT(), ">", obtenerAlpha(), obtenerN()))
     btnRC_Mayor_Que.pack()
-    btnRC_Diferente = Button(ventana,text="!=",command=lambda: prueba(calcularT(), "!=", obtenerAlpha()/2))
+    btnRC_Diferente = Button(ventana, text="!=", command=lambda: prueba(calcularT(), "!=", obtenerAlpha()/2, obtenerN()))
     btnRC_Diferente.pack()
     ventana.mainloop()
     return
@@ -82,22 +86,23 @@ def menu_varianza_desconocida():
         Función que rechaza o no rechaza H0.
     </summary>
     <param name="t">Valor del estadístico de tablas.</param>
+    <param name="n">Grados de libertad.</param>
     <param name="operation">Operación a realizar.</param>
     <param name="alpha">Valor de la significancia.</param>
 """
-def prueba(t, operation, alpha):
+def prueba(t, operation, alpha, n):
     if operation == "<":
-        if t <= -buscarZ(alpha):
+        if t <= -buscarT(alpha, n):
             messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")    
     elif operation == ">":
-        if t >= buscarZ(alpha):
+        if t >= buscarT(alpha, n):
             messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")
     elif operation == "!=":
-        if t <= -buscarZ(alpha) or t >= buscarZ(alpha):
+        if t <= -buscarT(alpha, n) or t >= buscarT(alpha, n):
             messagebox.showinfo("Resultado","Rechazamos H0.")
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")

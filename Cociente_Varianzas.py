@@ -73,7 +73,7 @@ def menu_cociente_varianzas():
         alpha = txtalpha.get()
         return float(alpha)
     #Botones para las pruebas de hipótesis.
-    btnRC_Menor_Que = Button(ventana,text="<",command=lambda: prueba(obtenern1(), obtenern2(), calcularFisher(), obteneralpha(), "<"))
+    btnRC_Menor_Que = Button(ventana,text="<",command=lambda: prueba(obtenern2(), obtenern1(), calcularFisher(), obteneralpha(), "<"))
     btnRC_Menor_Que.pack()
     btnRC_Mayor_Que = Button(ventana,text=">" ,command=lambda: prueba(obtenern1(), obtenern2(), calcularFisher(), obteneralpha(), ">"))
     btnRC_Mayor_Que.pack()
@@ -101,7 +101,7 @@ def prueba(n1, n2, fisher, alpha, opcion):
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")            
     elif opcion == ">":
-        if fisher >= buscarF(n2 - 1, n1 - 1, alpha):
+        if fisher >= buscarF(n1 - 1, n2 - 1, alpha):
             messagebox.showinfo("Resultado","Rechazamos H0.")            
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")            
