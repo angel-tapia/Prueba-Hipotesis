@@ -1,94 +1,104 @@
 from Tablas import *
 from Constantes import *
-import math
-import os
 from tkinter import Tk, Label , Button , Entry, messagebox
+import math
+
 """
     <summary>
-        Funcion menu que realiza la prueba de hipotesis de una media con varianza desconocida.
+        Función que centra la ventana generada.
     </summary>
-    <param name= sumatoria> guarda la sumatoria de todos los datos ingresados <param>
-    <param name = s>desviacion estandar de los datos ingresada por el usuario <param>
+    <params name="root">Ventana fuente a centrar.</params>
+    <params name="ancho">Anchura deseada para la ventana.</params>
+    <params name="alto">Altura deseada para la ventana.</params>
+    <params name="x">Posición en el eje de las x respecto al centro de la pantalla.</params>
+    <params name="y">Posición en el eje de las y respecto al centro de la pantalla.</params>
+"""
+def centrar(root, ancho, alto):
+    x = root.winfo_screenwidth() // 2 - ancho // 2
+    y = root.winfo_screenheight() // 2 - alto // 2
+    posicion = str(ancho) + "x" + str(alto) + "+" + str(x) + "+" + str(y)
+    root.geometry(posicion)
+    root.resizable(0,0)
+
+"""
+    <summary>
+        Función menú que realiza la prueba de hipótesis de una media con varianza desconocida.
+        Dentro de la función va a leer datos y va a llamar a la función prueba.
+    </summary>
+    <param name=sumatoria>Sumatoria de todos los datos ingresados <param>
+    <param name=s>Desviación estándar muestral.<param>
 """
 def menu_varianza_desconocida():
-    #creación de todos los componentes de la GUI
-    ventanta = Tk()
-    ventanta.title("Prueba de Hipotesis para una media con varianza conocida")
-    ventanta.geometry("500x300")
-    lbltitulo = Label(ventanta, text="Introduce los datos y selecciona la region critica a evaluar")
+    #Creación de la ventana.
+    ventana = Tk()
+    ventana.title("Prueba de hipótesis para una media con varianza conocida")
+    centrar(ventana, 500, 350)
+    #Creación de labels, botones y textboxs.
+    lbltitulo = Label(ventana, text="Introduce los datos y selecciona la region critica a evaluar:")
     lbltitulo.pack()
-    lbln = Label(ventanta, text="n =")
+    lbln = Label(ventana, text="n =")
     lbln.pack()
-    txtn = Entry(ventanta)
+    txtn = Entry(ventana)
     txtn.pack()
-    lblxbarra = Label(ventanta,text= Sxbar+" = ")
+    lblxbarra = Label(ventana,text= Sxbar+" = ")
     lblxbarra.pack()
-    txtxbarra = Entry(ventanta)
+    txtxbarra = Entry(ventana)
     txtxbarra.pack()
-    lblmiu = Label(ventanta,text=Smu+" = ")
+    lblmiu = Label(ventana,text=Smu+" = ")
     lblmiu.pack()
-    txtmiu = Entry(ventanta)
+    txtmiu = Entry(ventana)
     txtmiu.pack()
-    lbls = Label(ventanta,text="S = ")
+    lbls = Label(ventana,text="S = ")
     lbls.pack()
-    txts = Entry(ventanta)
+    txts = Entry(ventana)
     txts.pack()
-    lblalpha = Label(ventanta,text=Salpha+" = ")
+    lblalpha = Label(ventana,text=Salpha+" = ")
     lblalpha.pack()
-    txtalpha = Entry(ventanta)
+    txtalpha = Entry(ventana)
     txtalpha.pack()
-    #Función para calcular Z
-    def calcularZ():
+    #Función para calcular el estadístico t.
+    def calcularT():
         n = txtn.get()
         xbarra = txtxbarra.get()
         xmu = txtmiu.get()
         s = txts.get()
         return (float(xbarra) - float(xmu)) / (float(s) / math.sqrt(int(n)))
-    #Función para obtener el valor de alpha cuando lo necesite, esto fue lo primero que se me ocurrió lo lamento Tapia
+    #Función para obtener el valor de alpha.
     def obtenerAlpha():
         alpha = txtalpha.get()
-        return float(alpha)
-    
-    btnRC_Menor_Que = Button(ventanta,text="<",command=lambda: prueba(calcularZ(),"<", 0.5 - obtenerAlpha()))
+        return 0.5-float(alpha)
+    #Botones para las pruebas de hipótesis.
+    btnRC_Menor_Que = Button(ventana,text="<",command=lambda: prueba(calcularT(), "<", obtenerAlpha()))
     btnRC_Menor_Que.pack()
-    btnRC_Mayor_Que = Button(ventanta,text=">" ,command=lambda: prueba(calcularZ(),">", 0.5 - obtenerAlpha()))
+    btnRC_Mayor_Que = Button(ventana,text=">" ,command=lambda: prueba(calcularT(), ">", obtenerAlpha()))
     btnRC_Mayor_Que.pack()
-    btnRC_Diferente = Button(ventanta,text="!=",command=lambda: prueba(calcularZ(),"!=", 0.5 - obtenerAlpha()/2))
+    btnRC_Diferente = Button(ventana,text="!=",command=lambda: prueba(calcularT(), "!=", obtenerAlpha()/2))
     btnRC_Diferente.pack()
-    ventanta.mainloop()
+    ventana.mainloop()
     return
 
 """
     <summary>
-        Funcion que rechaza o no rechaza H0.
+        Función que rechaza o no rechaza H0.
     </summary>
-    <param name="z">Valor del estadistico prueba.</param>
-    <param name="operation">Operacion a realizar.</param>
-    <param name="alpha">Valor de alpha.</param>
+    <param name="t">Valor del estadístico de tablas.</param>
+    <param name="operation">Operación a realizar.</param>
+    <param name="alpha">Valor de la significancia.</param>
 """
-def prueba(z, operation, alpha):
+def prueba(t, operation, alpha):
     if operation == "<":
-        if z < -buscarZ(alpha):
+        if t <= -buscarZ(alpha):
             messagebox.showinfo("Resultado","Rechazamos H0.")
-            
         else:
-            messagebox.showinfo("Resultado","No rechazamos H0.")
-            
+            messagebox.showinfo("Resultado","No rechazamos H0.")    
     elif operation == ">":
-        if z > buscarZ(alpha):
+        if t >= buscarZ(alpha):
             messagebox.showinfo("Resultado","Rechazamos H0.")
-            
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")
-            print("No rechazamos H0.")
     elif operation == "!=":
-        if z < -buscarZ(alpha) or z > buscarZ(alpha):
+        if t <= -buscarZ(alpha) or t >= buscarZ(alpha):
             messagebox.showinfo("Resultado","Rechazamos H0.")
-            
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")
-            
     return
-    
-
-    

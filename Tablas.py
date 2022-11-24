@@ -1,7 +1,7 @@
 import pandas as pd
 from IPython.display import display
 
-# Leemos el excel con los datos
+#Leemos el Excel con los datos.
 tablaZ = pd.read_excel(r"Prueba-Hipotesis\TablaZ.xlsx")
 tablaT = pd.read_excel(r"Prueba-Hipotesis\TablaT.xlsx")
 tablaJiCuadrada = pd.read_excel(r"Prueba-Hipotesis\TablaJiCuadrada.xlsx")
@@ -50,14 +50,13 @@ def buscarJiCuadrada(alpha, n):
 def buscarT(alpha, n):
     return tablaT[alpha][n]
 
-
 """
     <summary>
-        Funcion que calcula el valor de la tabla Fisher 0.01.
+        Función que calcula el valor de la tabla Fisher con alpha = 0.01.
     </summary>
-    <param name="v1">Grados de libertad.</param>
-    <param name="v2">Grados de libertad.</param>
-    <return>Valor de la tabla Fisher 0.01.</return>
+    <param name="v1">Grados de libertad del numerador.</param>
+    <param name="v2">Grados de libertad del denominador.</param>
+    <return>Valor de la tabla Fisher.</return>
 """
 def buscarFisher01(v1, v2):
     for i in tablaFisher01:
@@ -74,13 +73,14 @@ def buscarFisher01(v1, v2):
             y = i
             break
     return tablaFisher01[x][y-1]
+
 """
     <summary>
-        Funcion que calcula el valor de la tabla Fisher 0.05.
+        Función que calcula el valor de la tabla Fisher con alpha = 0.05.
     </summary>
-    <param name="v1">Grados de libertad.</param>
-    <param name="v2">Grados de libertad.</param>
-    <return>Valor de la tabla Fisher 0.05.</return>
+    <param name="v1">Grados de libertad del numerador.</param>
+    <param name="v2">Grados de libertad del denominador.</param>
+    <return>Valor de la tabla Fisher.</return>
 """
 def buscarFisher05(v1, v2):
     for i in tablaFisher05:
@@ -100,12 +100,12 @@ def buscarFisher05(v1, v2):
 
 """
     <summary>
-        Funcion que calcula el valor de la tabla Fisher.
+        Función que calcula el valor de la tabla Fisher.
     </summary>
-    <param name="v1">Grados de libertad.</param>
-    <param name="v2">Grados de libertad.</param>
+    <param name="v1">Grados de libertad del numerador.</param>
+    <param name="v2">Grados de libertad del denominador.</param>
     <param name="alpha">Valor de la significancia.</param>
-    <return>Valor de la tabla Fisher.</return>
+    <return>Valor de la tabla Fisher con alpha = 0.01 ó alpha = 0.05.</return>
 """
 def buscarF(v1, v2, alpha):
     if alpha == 0.01:

@@ -1,81 +1,99 @@
 from Tablas import *
 from Constantes import *
-import math
-import os
 from tkinter import Tk, Label , Button , Entry, messagebox
+import math
+
 """
     <summary>
-        Funcion menu que realiza la prueba de hipotesis de una proporcion.
+        Función que centra la ventana generada.
     </summary>
-    <param name="x">Numero de exitos en la muestra.</param>
-    <param name="n">Numero de ensayos en la muestra.</param>
+    <params name="root">Ventana fuente a centrar.</params>
+    <params name="ancho">Anchura deseada para la ventana.</params>
+    <params name="alto">Altura deseada para la ventana.</params>
+    <params name="x">Posición en el eje de las x respecto al centro de la pantalla.</params>
+    <params name="y">Posición en el eje de las y respecto al centro de la pantalla.</params>
+"""
+def centrar(root, ancho, alto):
+    x = root.winfo_screenwidth() // 2 - ancho // 2
+    y = root.winfo_screenheight() // 2 - alto // 2
+    posicion = str(ancho) + "x" + str(alto) + "+" + str(x) + "+" + str(y)
+    root.geometry(posicion)
+    root.resizable(0,0)
+
+"""
+    <summary>
+        Función menú que realiza la prueba de hipótesis de una proporción.
+        Dentro de la función va a leer datos y va a llamar a la función prueba.
+    </summary>
+    <param name="x">Número de éxitos en la muestra.</param>
+    <param name="n">Número de ensayos en la muestra.</param>
     <param name="alpha">Nivel de significancia.</param>
-    <param name="Z">Valor del estadistico de prueba.</param>
+    <param name="Z">Valor del estadístico de prueba.</param>
 """
 def menu_proporcion():
-    ventanta = Tk()
-    ventanta.title("Prueba de Hipotesis para una proporcion")
-    ventanta.geometry("500x300")
-    lbln = Label(ventanta, text="n =")
+    ventana = Tk()
+    ventana.title("Prueba de hipótesis para una proporción")
+    centrar(ventana, 500, 350)
+    lbltitulo = Label(ventana, text="Introduce los datos y selecciona la región crítica a evaluar:")
+    lbltitulo.pack()
+    lbln = Label(ventana, text="n =")
     lbln.pack()
-    txtn = Entry(ventanta)
+    txtn = Entry(ventana)
     txtn.pack()
-    lblx = Label(ventanta,text= "x = ")
+    lblx = Label(ventana,text= "x = ")
     lblx.pack()
-    txtx = Entry(ventanta)
+    txtx = Entry(ventana)
     txtx.pack()
-    lblalpha = Label(ventanta,text=Salpha+" = ")
+    lbltheta = Label(ventana,text=Stheta+"_0 = ")
+    lbltheta.pack()
+    txttheta = Entry(ventana)
+    txttheta.pack()
+    lblalpha = Label(ventana,text=Salpha+" = ")
     lblalpha.pack()
-    txtalpha = Entry(ventanta)
+    txtalpha = Entry(ventana)
     txtalpha.pack()
+    #Función para calcular el estadístico z.
     def calcularZ():
-        x = txtx.get()
-        n = txtn.get()
-        theta = int(x)/int(n)
-        return (int(x) - int(n)*theta) / math.sqrt(int(n)*theta*(1-theta))
-   
+        x = float(txtx.get())
+        n = float(txtn.get())
+        theta = float(txttheta.get())
+        return (x - n*theta) / math.sqrt(n*theta*(1-theta))
+    #Función para obtener el valor de alpha.
     def obtenerAlpha():
         alpha = txtalpha.get()
-        return float(alpha)
-   
-    btnRC_Menor_Que = Button(ventanta,text="<",command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha(),"1"))
+        return 0.5-float(alpha)
+    #Botones para las pruebas de hipótesis.
+    btnRC_Menor_Que = Button(ventana, text="<", command=lambda: prueba(calcularZ(), "<", obtenerAlpha()))
     btnRC_Menor_Que.pack()
-    btnRC_Mayor_Que = Button(ventanta,text=">" ,command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha(),"2"))
+    btnRC_Mayor_Que = Button(ventana, text=">" , command=lambda: prueba(calcularZ(), ">", obtenerAlpha()))
     btnRC_Mayor_Que.pack()
-    btnRC_Diferente = Button(ventanta,text="!=",command=lambda: prueba(calcularZ(), 0.5 - obtenerAlpha()/2,"3"))
+    btnRC_Diferente = Button(ventana, text="!=", command=lambda: prueba(calcularZ(), "!=", obtenerAlpha()/2))
     btnRC_Diferente.pack()
-    ventanta.mainloop()
+    ventana.mainloop()
     return
 
 """
     <summary>
-        Funcion que rechaza o no rechaza H0.
+        Función que rechaza o no rechaza H0.
     </summary>
-    <param name="Z">Valor de la prueba.</param>
-    <param name="alpha">Valor de alpha.</param>
-    <param name="opcion">Opcion de la prueba.</param>
+    <param name="z">Valor del estadístico de tablas.</param>
+    <param name="alpha">Valor de la significancia.</param>
+    <param name="operation">Opción de la prueba.</param>
 """
 def prueba(z, operation, alpha):
     if operation == "<":
-        if z < -buscarZ(alpha):
-            messagebox.showinfo("Resultado","Rechazamos H0.")
-            
+        if z <= -buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")            
         else:
-            messagebox.showinfo("Resultado","No rechazamos H0.")
-            
+            messagebox.showinfo("Resultado","No rechazamos H0.")            
     elif operation == ">":
-        if z > buscarZ(alpha):
-            messagebox.showinfo("Resultado","Rechazamos H0.")
-            
+        if z >= buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")            
         else:
             messagebox.showinfo("Resultado","No rechazamos H0.")
-            print("No rechazamos H0.")
     elif operation == "!=":
-        if z < -buscarZ(alpha) or z > buscarZ(alpha):
-            messagebox.showinfo("Resultado","Rechazamos H0.")
-            
+        if z <= -buscarZ(alpha) or z >= buscarZ(alpha):
+            messagebox.showinfo("Resultado","Rechazamos H0.")            
         else:
-            messagebox.showinfo("Resultado","No rechazamos H0.")
-            
+            messagebox.showinfo("Resultado","No rechazamos H0.")            
     return
-
