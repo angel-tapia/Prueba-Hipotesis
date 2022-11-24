@@ -6,6 +6,8 @@ from Varianza import *
 from Diferencia_Medias import *
 from Diferencia_Proporcion import *
 from Cociente_Varianzas import *
+from main_Breakout import *
+from main_Snake import *
 import os
 
 """
@@ -13,7 +15,7 @@ import os
         Funcion que muestra el menu de las pruebas de hipotesis.
     </summary>
 """
-def menu():
+if __name__ == "__main__":
     print("""
     Pruebas de Hipotesis
     1. Prueba de Hipotesis para una media con varianza conocida.
@@ -23,6 +25,8 @@ def menu():
     5. Prueba de Hipotesis para diferencia de medias.
     6. Prueba de Hipotesis para diferencia de proporciones.
     7. Prueba de Hipotesis para cociente de varianzas.
+    8. Jugar Snake.
+    9. Jugar Breakout.
     """)
     opcion = int(input("Seleccione una opcion: "))
     os.system("cls")
@@ -47,11 +51,13 @@ def menu():
     elif opcion == 7:
         print("Prueba de Hipotesis para cociente de varianzas")
         menu_cociente_varianzas()
+    elif opcion == 8:
+        print("Jugar Snake")
+        runSnake()
+    elif opcion == 9:
+        print("Jugar Breakout")
+        runBreakout()
     else:
         print("Opcion no valida")
         os.system("pause")
-        menu()
     os.system("pause")
-    menu()
-print("Hola!!")
-menu()
